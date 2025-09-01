@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+{% block content %}
+  <div class="p-4 p-md-5 mb-4 bg-light rounded-3">
+    <div class="container-fluid py-5">
+      <h1 class="display-6">Find trusted pet sitters at EAFIT</h1>
+      <p class="lead">Search, request a walk or care service, and keep everything within campus.</p>
+      <a class="btn btn-primary btn-lg" href="{% url 'create_request' %}">Request a service</a>
+    </div>
+  </div>
+
+  <h3 class="mb-3">Featured sitters</h3>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+    {% for s in sitters %}
+    <div class="col">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ s.name }}</h5>
+          <p class="card-text">{{ s.bio|default:"No bio yet." }}</p>
+          <span class="badge text-bg-success">${{ s.price_per_hour }} / hour</span>
+          {% if s.is_verified %}<span class="badge text-bg-primary ms-1">Verified</span>{% endif %}
+        </div>
+      </div>
+    </div>
+    {% empty %}
+      <p>No sitters yet. Add some from Admin.</p>
+    {% endfor %}
+  </div>
+{% endblock %}
