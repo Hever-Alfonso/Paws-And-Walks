@@ -1,0 +1,17 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Virtual environments
+.venv/
+venv/
+
+# SQLite database (local only)
+pawsproject/db.sqlite3
+
+# User uploads (not tracked)
+pawsproject/media/
+
+# macOS system files
+.DS_Store
+*/.DS_Store
