@@ -95,7 +95,8 @@ mkdir -p pawsproject/static
 ## Project tree (top level)
 
 ```
-PawsAndWalks_Complete/
+PawsAndWalks_MVP/
+├─ .gitignore
 ├─ README.md
 ├─ requirements.txt
 └─ pawsproject/
