@@ -1,4 +1,4 @@
-
+{% load static %}
 <!doctype html>
 <html lang="es">
 <head>
@@ -15,9 +15,9 @@
 <nav class="navbar navbar-expand-lg bg-light border-bottom mb-3">
   <div class="container">
     <a class="navbar-brand d-flex align-items-center" href="/">
-      <img src="https://dummyimage.com/120x48/eee/333.png&text=P%26W" alt="logo" class="logo-img me-2">
+      <img src="{% static 'images/Logo_mvp.jpeg' %}" alt="Paws & Walks" class="logo-img me-2">
       <strong>Paws & Walks</strong>
-    </a>
+    </a>    
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -27,7 +27,7 @@
         <li class="nav-item"><a class="nav-link" href="{% url 'requestsboard:list' %}">📡 Requests</a></li>
         {% if user.is_authenticated %}
           <li class="nav-item"><a class="nav-link" href="{% url 'requestsboard:mine' %}">Mis solicitudes</a></li>
-          <li class="nav-item"><a class="nav-link" href="{% url 'marketplace:my_profile' %}">Mi perfil (Seeder)</a></li>
+          <li class="nav-item"><a class="nav-link" href="{% url 'marketplace:my_profile' %}">Mi perfil (Sitter)</a></li>
           <li class="nav-item"><a class="nav-link" href="{% url 'marketplace:my_services' %}">Mis servicios</a></li>
         {% endif %}
       </ul>
