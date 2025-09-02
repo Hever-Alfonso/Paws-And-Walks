@@ -1,0 +1,27 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<h2>Listado de Sitters</h2>
+<div class="row row-cols-1 row-cols-md-2 g-3 mt-1">
+  {% for s in sitters %}
+  <div class="col">
+    <div class="card p-2 sitter-card">
+      {% if s.photo %}<img src="{{ s.photo.url }}" class="avatar" alt="">{% else %}<div class="avatar"></div>{% endif %}
+      <div>
+        <h5 class="mb-1"><a href="{% url 'marketplace:sitter_detail' s.pk %}">{{ s.user.username }}</a></h5>
+        <div class="text-muted small">📞 {{ s.phone|default:'No phone' }}</div>
+        <div class="mt-2">
+          {% for svc in s.services.all %}
+            <span class="badge text-bg-primary me-1">{{ svc.get_service_type_display }}: ${{ svc.price_cop }}</span>
+          {% empty %}
+            <span class="text-muted small">Sin servicios configurados.</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% empty %}
+  <p class="text-muted">No hay sitters aún.</p>
+  {% endfor %}
+</div>
+{% endblock %}

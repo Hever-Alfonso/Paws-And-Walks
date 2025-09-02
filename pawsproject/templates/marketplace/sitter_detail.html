@@ -1,0 +1,44 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex align-items-center gap-3">
+  {% if profile.photo %}<img src="{{ profile.photo.url }}" class="avatar" alt="">{% else %}<div class="avatar"></div>{% endif %}
+  <div>
+    <h3>@{{ profile.user.username }}</h3>
+    <p class="text-muted small">{{ profile.bio }}</p>
+    <div class="mt-2">
+      {% for svc in profile.services.all %}
+        <span class="badge text-bg-primary me-1">{{ svc.get_service_type_display }}: ${{ svc.price_cop }}</span>
+      {% empty %}<span class="text-muted">Sin servicios aún.</span>{% endfor %}
+    </div>
+  </div>
+</div>
+
+<hr>
+<h5>Calificaciones</h5>
+{% if request.user.is_authenticated %}
+  {% if my_rating %}
+    <a class="btn btn-outline-secondary btn-sm" href="{% url 'marketplace:edit_rating' my_rating.pk %}">Editar mi comentario</a>
+    <form method="post" action="{% url 'marketplace:delete_rating' my_rating.pk %}" class="d-inline">
+      {% csrf_token %}<button class="btn btn-outline-danger btn-sm">Eliminar mi comentario</button>
+    </form>
+  {% else %}
+    <a class="btn btn-primary btn-sm" href="{% url 'marketplace:rate_sitter' profile.pk %}">Calificar</a>
+  {% endif %}
+{% else %}
+  <p><a href="{% url 'login' %}">Entra</a> para calificar.</p>
+{% endif %}
+
+<ul class="list-group mt-3">
+  {% for r in ratings %}
+    <li class="list-group-item">
+      <strong>{{ r.rater.username }}</strong> · {{ r.score }}/5
+      {% if r.rater == request.user %}<span class="badge text-bg-info ms-2">Tú</span>{% endif %}
+      {% if r.comment %}<p class="mb-0 mt-2">{{ r.comment }}</p>{% endif %}
+      <div class="text-muted small">{{ r.created_at|date:"Y-m-d H:i" }}</div>
+    </li>
+  {% empty %}
+    <li class="list-group-item text-muted">Aún no hay calificaciones.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

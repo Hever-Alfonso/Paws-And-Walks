@@ -1,0 +1,28 @@
+
+{% extends 'base.html' %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center">
+  <h3>Mis solicitudes</h3>
+  <a class="btn btn-primary" href="{% url 'requestsboard:create' %}">Nueva solicitud</a>
+</div>
+<div class="list-group mt-3">
+{% for r in items %}
+  <div class="list-group-item">
+    <div class="d-flex justify-content-between">
+      <div>
+        <div class="fw-bold">{{ r.title }}</div>
+        <div class="text-muted small">{{ r.get_service_type_display }} · {{ r.created_at|date:"Y-m-d H:i" }}</div>
+        <p class="mb-2 mt-2">{{ r.description|default:'Sin descripción' }}</p>
+        {% if r.contact_phone %}<span class="badge text-bg-secondary">📞 {{ r.contact_phone }}</span>{% endif %}
+      </div>
+      <div class="ms-3 text-end">
+        <a class="btn btn-sm btn-outline-primary" href="{% url 'requestsboard:update' r.pk %}">Editar</a>
+        <a class="btn btn-sm btn-outline-danger" href="{% url 'requestsboard:delete' r.pk %}">Eliminar</a>
+      </div>
+    </div>
+  </div>
+{% empty %}
+  <div class="text-secondary">Aún no has publicado solicitudes.</div>
+{% endfor %}
+</div>
+{% endblock %}
