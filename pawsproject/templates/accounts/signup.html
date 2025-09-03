@@ -6,8 +6,16 @@
     <h3>Crear cuenta</h3>
     <form method="post" class="mt-3">
       {% csrf_token %}
-      {{ form.as_p }}
+      <div class="mb-2">{{ form.username.label_tag }} {{ form.username }}</div>
+      <div class="mb-2">{{ form.email.label_tag }} {{ form.email }}<small class="form-text text-muted">Usa tu correo institucional @eafit.edu.co</small></div>
+      <div class="mb-2">{{ form.role.label_tag }} {{ form.role }}</div>
+      <div class="mb-2">{{ form.password1.label_tag }} {{ form.password1 }}</div>
+      <div class="mb-2">{{ form.password2.label_tag }} {{ form.password2 }}</div>
       <button class="btn btn-primary">Crear</button>
+    
+      <div class="alert alert-info mt-3">
+        <strong>Requisitos de contraseña:</strong> mínimo 8 caracteres y al menos una mayúscula, una minúscula y un número.
+      </div>
     </form>
     <p class="text-muted mt-2">Usa tu correo @eafit.edu.co</p>
   </div>

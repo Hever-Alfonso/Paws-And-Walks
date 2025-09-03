@@ -17,7 +17,9 @@
 <hr>
 <h5>Calificaciones</h5>
 {% if request.user.is_authenticated %}
-  {% if my_rating %}
+  {% if profile.user == request.user %}
+    <div class="alert alert-warning">No puedes calificar/comentar tu propio perfil.</div>
+  {% elif my_rating %}
     <a class="btn btn-outline-secondary btn-sm" href="{% url 'marketplace:edit_rating' my_rating.pk %}">Editar mi comentario</a>
     <form method="post" action="{% url 'marketplace:delete_rating' my_rating.pk %}" class="d-inline">
       {% csrf_token %}<button class="btn btn-outline-danger btn-sm">Eliminar mi comentario</button>

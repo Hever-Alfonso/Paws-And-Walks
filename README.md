@@ -98,6 +98,7 @@ mkdir -p pawsproject/static
 PawsAndWalks_MVP/
 ├─ .gitignore
 ├─ README.md
+├─ docs
 ├─ requirements.txt
 └─ pawsproject/
    ├─ manage.py

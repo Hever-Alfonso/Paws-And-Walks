@@ -1,3 +1,4 @@
+from PIL import Image
 
 from django.db import models
 from django.conf import settings
@@ -13,6 +14,21 @@ class SitterProfile(models.Model):
     photo = models.ImageField(upload_to='profiles/', blank=True, null=True)
     average_rating = models.FloatField(default=0.0)
     ratings_count = models.PositiveIntegerField(default=0)
+    
+
+def save(self, *args, **kwargs):
+    super().save(*args, **kwargs)
+    # Resize uploaded profile photo to a sane size (max 800x800) to avoid huge files on page
+    if self.photo and hasattr(self.photo, 'path'):
+        try:
+            img = Image.open(self.photo.path)
+            MAX_SIZE = (800, 800)
+            if img.height > MAX_SIZE[1] or img.width > MAX_SIZE[0]:
+                img.thumbnail(MAX_SIZE)  # in-place, keeps aspect ratio
+                img.save(self.photo.path, optimize=True, quality=85)
+        except Exception:
+            # If resizing fails, we silently ignore to not block user actions
+            pass
     def __str__(self): return f"{self.user}"
 
 class SitterService(models.Model):

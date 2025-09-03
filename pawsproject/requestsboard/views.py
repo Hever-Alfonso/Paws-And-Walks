@@ -15,11 +15,17 @@ def list_requests(request):
 
 @login_required
 def my_requests(request):
+    if not request.user.is_authenticated or not request.user.is_owner:
+        messages.error(request, 'Only owners can see their own requests.')
+        return redirect('requestsboard:list')
     items = ServiceRequest.objects.filter(owner=request.user)
     return render(request, 'requestsboard/mine.html', {'items': items})
 
 @login_required
 def create_request(request):
+    if not request.user.is_authenticated or not request.user.is_owner:
+        messages.error(request, 'Only owners can create requests.')
+        return redirect('requestsboard:list')
     if request.method == 'POST':
         form = RequestForm(request.POST)
         if form.is_valid():
@@ -33,7 +39,10 @@ def create_request(request):
     return render(request, 'requestsboard/form.html', {'form': form, 'title': 'Nueva solicitud'})
 
 @login_required
-def update_request(request, pk):
+def update_request(request):
+    if not request.user.is_authenticated or not request.user.is_owner:
+        messages.error(request, 'Only owners can update their requests.')
+        return redirect('requestsboard:list')
     obj = get_object_or_404(ServiceRequest, pk=pk, owner=request.user)
     if request.method == 'POST':
         form = RequestForm(request.POST, instance=obj)
@@ -46,7 +55,10 @@ def update_request(request, pk):
     return render(request, 'requestsboard/form.html', {'form': form, 'title': 'Editar solicitud'})
 
 @login_required
-def delete_request(request, pk):
+def delete_request(request):
+    if not request.user.is_authenticated or not request.user.is_owner:
+        messages.error(request, 'Only owners can delete their requests.')
+        return redirect('requestsboard:list')
     obj = get_object_or_404(ServiceRequest, pk=pk, owner=request.user)
     if request.method == 'POST':
         obj.delete()
