@@ -1,6 +1,8 @@
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-paws-and-walks')
 DEBUG = True
@@ -16,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'chatbot',
 ]
 
 MIDDLEWARE = [
@@ -78,3 +81,8 @@ LOGIN_URL = 'login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
+
+
+load_dotenv()  # carga el archivo .env
+
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
