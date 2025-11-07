@@ -27,6 +27,9 @@ def pet_assistant(request):
             else:
                 context = ""
 
+            api_key = settings.OPENAI_API_KEY
+            client = OpenAI(api_key=api_key)
+
             try:
                 response = client.chat.completions.create(
                     model="gpt-4o-mini",
