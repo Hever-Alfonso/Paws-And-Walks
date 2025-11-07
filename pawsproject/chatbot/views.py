@@ -6,7 +6,6 @@ from openai import OpenAI
 import logging
 
 logger = logging.getLogger(__name__)
-client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 def pet_assistant(request):
     if request.method == 'POST':
