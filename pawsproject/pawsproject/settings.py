@@ -82,7 +82,6 @@ LOGIN_URL = 'login'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
-
-load_dotenv()  # carga el archivo .env
+load_dotenv(BASE_DIR.parent / 'api_keys.env')  # carga /Paws-And-Walks/api_keys.env
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
