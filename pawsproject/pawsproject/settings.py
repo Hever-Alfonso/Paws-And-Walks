@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-paws-and-walks')
 DEBUG = True
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['54.165.85.241']
 
 INSTALLED_APPS = [
     'accounts',
