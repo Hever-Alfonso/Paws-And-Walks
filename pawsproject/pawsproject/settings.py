@@ -3,6 +3,8 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
+load_dotenv()  # carga el archivo .env
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-paws-and-walks')
 DEBUG = True
@@ -81,8 +83,5 @@ LOGIN_URL = 'login'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
-
-
-load_dotenv()  # carga el archivo .env
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
