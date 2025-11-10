@@ -49,3 +49,38 @@ class SitterRating(models.Model):
         unique_together = ('profile','rater')
         ordering = ['-created_at']
     def __str__(self): return f"Rating({self.profile.user} <- {self.rater}: {self.score})"
+
+class Message(models.Model):
+    sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
+    sitter_profile = models.ForeignKey(SitterProfile, on_delete=models.CASCADE, related_name='messages')
+    content = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+    is_read = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['timestamp']
+
+    def __str__(self):
+        return f"{self.sender} → {self.receiver}: {self.content[:30]}"
+    
+    from django.utils import timezone
+
+class Appointment(models.Model):
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments_as_owner')
+    sitter = models.ForeignKey(User, on_delete=models.CASCADE, related_name='appointments_as_sitter')
+    sitter_profile = models.ForeignKey(SitterProfile, on_delete=models.CASCADE)
+    date = models.DateTimeField()
+    notes = models.TextField(blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(
+        max_length=20,
+        choices=[('pending', 'Pending'), ('confirmed', 'Confirmed'), ('cancelled', 'Cancelled')],
+        default='pending'
+    )
+
+    class Meta:
+        ordering = ['date']
+
+    def __str__(self):
+        return f"Appointment: {self.owner} ↔ {self.sitter} on {self.date}"

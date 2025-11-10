@@ -6,6 +6,7 @@ from openai import OpenAI
 import logging
 
 logger = logging.getLogger(__name__)
+client = OpenAI(api_key=settings.OPENAI_API_KEY)
 
 def pet_assistant(request):
     if request.method == 'POST':
@@ -26,9 +27,6 @@ def pet_assistant(request):
                 )
             else:
                 context = ""
-
-            api_key = settings.OPENAI_API_KEY
-            client = OpenAI(api_key=api_key)
 
             try:
                 response = client.chat.completions.create(

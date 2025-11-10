@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-paws-and-walks')
 DEBUG = True
-ALLOWED_HOSTS = ['54.91.180.208']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 INSTALLED_APPS = [
     'accounts',
@@ -82,6 +82,7 @@ LOGIN_URL = 'login'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'accounts.User'
 
-load_dotenv(BASE_DIR.parent / 'api_keys.env')  # carga /Paws-And-Walks/api_keys.env
+
+load_dotenv()  # carga el archivo .env
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
