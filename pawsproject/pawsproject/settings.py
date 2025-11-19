@@ -8,7 +8,7 @@ load_dotenv()  # carga el archivo .env
 BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'dev-secret-paws-and-walks')
 DEBUG = True
-ALLOWED_HOSTS = ['54.226.204.103']
+ALLOWED_HOSTS = ['13.218.39.78']
 
 INSTALLED_APPS = [
     'accounts',
